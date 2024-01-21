@@ -1,8 +1,12 @@
 package case4pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utils.Driver;
 
@@ -22,7 +26,7 @@ public class Guru99Page {
     }
 
 	public void closeAdIfPresent() {
-		if (driver.findElements(adIframeLocator).size() > 0) {
+		if (driver.findElements(adIframeLocator).size() > 0 && driver.findElement(adIframeLocator).isDisplayed()) {
 			Driver.switchToFrame(adIframeLocator);
 			driver.findElement(By.xpath("//span[text()='Close'] | //div[@id='dismiss-button']")).click();
 			driver.switchTo().parentFrame();
@@ -30,7 +34,9 @@ public class Guru99Page {
 	}
 	
 	public void acceptGdpr() {
-		Driver.switchToFrame(By.id("gdpr-consent-notice"));
+		Driver.switchToFrame(By.xpath("//iframe[@id='gdpr-consent-notice']"));
+    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    	wait.until(ExpectedConditions.elementToBeClickable(acceptGdprButton()));
         acceptGdprButton().click();
         Driver.switchToParentFrame();
 	}
