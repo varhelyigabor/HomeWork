@@ -1,4 +1,5 @@
 package utils;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,36 +11,36 @@ import com.google.gson.Gson;
 import models.Credentials;
 
 public class JsonReader {
-	
-    public static Credentials getCredentialsJackson() {
 
-    	ObjectMapper objectMapper = new ObjectMapper();
+	public static Credentials getCredentialsJackson() {
 
-    	Credentials credentials;
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		Credentials credentials;
 		try {
-			credentials = objectMapper.readValue(new File("test/resources/credential_jackson.json"), Credentials.class );
+			credentials = objectMapper.readValue(new File("test/resources/credential_jackson.json"), Credentials.class);
 			return credentials;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-    	return null;
+		return null;
 
-    }
-    
-    public static Credentials getCredentials() {
+	}
 
-        try (Reader reader = new FileReader("test/resources/credential.json")) {
-            Gson gson = new Gson();
-            Credentials c = gson.fromJson(reader, Credentials.class);
+	public static Credentials getCredentials() {
 
-            return c;
+		try (Reader reader = new FileReader("test/resources/credential.json")) {
+			Gson gson = new Gson();
+			Credentials c = gson.fromJson(reader, Credentials.class);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			return c;
 
-    	return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    }
+		return null;
+
+	}
 }

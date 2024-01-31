@@ -12,26 +12,26 @@ import utils.Driver;
 
 public class HtmlEditorPage {
 
-    private WebDriver driver;
-    private JavascriptExecutor js;
-    
-    public HtmlEditorPage() {
-    	driver = Driver.getDriverInstance();
-    	this.waitForEditor();
-    }
-    
-    private WebElement loader() {
-        return driver.findElement(By.className("spinner"));
-    }
-    
-    private WebElement editorBody() {
-        return driver.findElement(By.tagName("body"));
-    }
-    
-    public void waitForEditor() {
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    	wait.until(ExpectedConditions.invisibilityOf(loader()));
-    }
+	private WebDriver driver;
+	private JavascriptExecutor js;
+
+	public HtmlEditorPage() {
+		driver = Driver.getDriverInstance();
+		this.waitForEditor();
+	}
+
+	private WebElement loader() {
+		return driver.findElement(By.className("spinner"));
+	}
+
+	private WebElement editorBody() {
+		return driver.findElement(By.tagName("body"));
+	}
+
+	public void waitForEditor() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.invisibilityOf(loader()));
+	}
 
 	public void insertHtmlCodeToEditor(String html) {
 		js = (JavascriptExecutor) driver;
