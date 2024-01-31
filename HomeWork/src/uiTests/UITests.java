@@ -1,17 +1,11 @@
 package uiTests;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import case12pages.CheckoutCompletePage;
-import case12pages.CheckoutInformationPage;
-import case12pages.CheckoutOverviewPage;
-import case12pages.LoginPage;
-import case12pages.ProductsPage;
-import case12pages.YourCartPage;
+import case12pages.Pages;
 import case3pages.HtmlEditorPage;
 import case4pages.Guru99Page;
 import case4pages.SeleniumLiveProjectPage;
@@ -22,11 +16,13 @@ import utils.JsonReader;
 public class UITests {
 
 	WebDriver driver;
+	Pages pages;
 	
 	@BeforeTest
 	public void setup() {
 		driver = Driver.getDriverInstance();
 	    driver.manage().window().maximize();
+	    pages = new Pages();
 	}
 	
 	@AfterTest
@@ -39,28 +35,21 @@ public class UITests {
 	
 		Credentials user = JsonReader.getCredentials();
 		Driver.openUrl("https://www.saucedemo.com/");
-	    LoginPage loginPage = new LoginPage(driver);
-	    loginPage.login(user.username, user.password);
-		
-	    ProductsPage productsPage = new ProductsPage(driver);
-	    productsPage.addToCart("Sauce Labs Backpack");
-	    productsPage.addToCart("Sauce Labs Fleece Jacket");
+	    pages.onLoginPage().login(user.username, user.password);
 	    
-	    Assert.assertEquals(productsPage.getCartCount(), 2, "Cart count symbol should show 2.");
-	
-	    productsPage.openCart();
-	    YourCartPage yourCartPage = new YourCartPage(driver);
-	    yourCartPage.clickOnCheckoutButton();
+	    pages.onProductsPage().addToCart("Sauce Labs Backpack");
+	    pages.onProductsPage().addToCart("Sauce Labs Fleece Jacket");
+	    Assert.assertEquals(pages.onProductsPage().getCartCount(), 2, "Cart count symbol should show 2.");
 	    
-	    CheckoutInformationPage checkoutInformationPage = new CheckoutInformationPage(driver); 
-	    checkoutInformationPage.fillCustomerData("Test", "User", "1111");
-	    checkoutInformationPage.clickOnContinueButton();
+	    pages.onProductsPage().openCart();
+	    pages.onYourCartPage().clickOnCheckoutButton();
 	    
-	    CheckoutOverviewPage checkoutOverviewPage = new CheckoutOverviewPage(driver); 
-	    checkoutOverviewPage.clickOnFinishButton();
+	    pages.onCheckoutInformationPage().fillCustomerData("Test", "User", "1111");
+	    pages.onCheckoutInformationPage().clickOnContinueButton();
 	    
-	    CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage(driver);
-	    Assert.assertTrue(checkoutCompletePage.isOrderSuccessful());
+	    pages.onCheckoutOverviewPage().clickOnFinishButton();
+	    
+	    Assert.assertTrue(pages.onCheckoutCompletePage().isOrderSuccessful());
 
 	}
 	
@@ -68,17 +57,15 @@ public class UITests {
 	public void case2_test() {
 		
 		Driver.openUrl("https://www.saucedemo.com/");    
-	    LoginPage loginPage = new LoginPage(driver);
-	    loginPage.clickLoginButton();
+	    pages.onLoginPage().clickLoginButton();
 	    
-	    Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required");
-	    loginPage.login("standard_user", "secret_sauce");
+	    Assert.assertEquals(pages.onLoginPage().getErrorMessage(), "Epic sadface: Username is required");
+	    pages.onLoginPage().login("standard_user", "secret_sauce");
 	    
-	    ProductsPage productsPage = new ProductsPage(driver);
-        productsPage.scrollDownToFooter();
+	    pages.onProductsPage().scrollDownToFooter();
 	    
-	    Assert.assertTrue(productsPage.getFooterText().contains("2024"));
-	    Assert.assertTrue(productsPage.getFooterText().contains("Terms of Service"));
+	    Assert.assertTrue(pages.onProductsPage().getFooterText().contains("2024"));
+	    Assert.assertTrue(pages.onProductsPage().getFooterText().contains("Terms of Service"));
 	    
 	}
 	

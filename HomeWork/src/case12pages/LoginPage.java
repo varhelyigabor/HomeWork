@@ -1,13 +1,11 @@
 package case12pages;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends SauceDemoBasePage{
-    private WebDriver driver;
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
+    public LoginPage() {
+    	super();
     }
     
     private WebElement usernameInput() {

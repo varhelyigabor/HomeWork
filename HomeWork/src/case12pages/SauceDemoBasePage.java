@@ -9,7 +9,7 @@ import utils.Driver;
 
 public class SauceDemoBasePage {
 
-    private WebDriver driver;
+    protected WebDriver driver;
     
     public SauceDemoBasePage() {
     	driver = Driver.getDriverInstance();

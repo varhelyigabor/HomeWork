@@ -1,13 +1,11 @@
 package case12pages;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ProductsPage extends SauceDemoBasePage {
-    private WebDriver driver;
 
-    public ProductsPage(WebDriver driver) {
-        this.driver = driver;
+	public ProductsPage() {
+        super();
     }
 
     private WebElement cartIcon() {

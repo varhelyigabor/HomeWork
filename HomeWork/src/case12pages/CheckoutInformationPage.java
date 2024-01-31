@@ -1,15 +1,12 @@
 package case12pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class CheckoutInformationPage extends SauceDemoBasePage {
 
-    private WebDriver driver;
-
-    public CheckoutInformationPage(WebDriver driver) {
-        this.driver = driver;
+    public CheckoutInformationPage() {
+    	super();
     }
     
     private WebElement firstNameInput() {
